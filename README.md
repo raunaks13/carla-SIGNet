@@ -80,6 +80,16 @@ It is encouraged to go over how exactly these files are read into TF queues so t
 
 `bash run_depth_train.sh config/foobar.cfg` can be used to train depth.
 
+## Generating Semantic Data
+The SIGNet paper uses DeepLabv3+ to generate semantic maps. The `_.npy` files are simply the semantic segmentation image maps saved as `npy` files. The extension is updated to `.raw` for faster data loading.
+
+## Generating Instance Masks
+The SIGNet paper uses Mask-RCNN trained using FAIR's [Detectron]{https://github.com/facebookresearch/Detectron}. The Detectron code can be found in ________.
+The `_instance_new.npy` files are generated using the script ______. Once again, the extension is updated to `.raw` for faster data loading.
+
+## Generating Camera Intrinsics
+The `_cam.txt` files contain 9 comma separated values representing the camera calibration matrix, in index order `(0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2)`.
+
 ### Evaluation
 
 There are a few changes during evaluation. The image files which contained sequences earlier will now contain single images since we only need single image input for depth prediction.
