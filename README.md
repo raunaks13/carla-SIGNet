@@ -1,15 +1,15 @@
-# Semantic Instance Geometry Network for Unsupervised Percepetion
+# Semantic Instance Geometry Network for Unsupervised Perception
 
 > Project page: [https://mengyuest.github.io/SIGNet/](https://mengyuest.github.io/SIGNet/)
 
-This is the implementation of our paper:
+> Original implementation trained on [KITTI](http://www.cvlibs.net/datasets/kitti/index.php): https://github.com/mengyuest/SIGNet
 
-
+> Original paper: 
 Y. Meng, Y. Lu, A. Raj, S. Sunarjo, R. Guo, T. Javidi, G. Bansal, D. Bharadia. **"SIGNet: Semantic Instance Aided Unsupervised 3D Geometry Perception"**,  (CVPR), 2019. \[[arXiv pdf](https://arxiv.org/pdf/1812.05642.pdf)\] 
 
+This repository recreates SIGNet for the CARLA Simulator. It also contains detailed instructions about how to train SIGNet on new datasets.
 
-The code is build upon [GeoNet](https://github.com/yzcjtr/GeoNet)
-
+The code is build upon [GeoNet](https://github.com/yzcjtr/GeoNet).
 
 ## Prerequisite
 
@@ -18,23 +18,9 @@ The code is build upon [GeoNet](https://github.com/yzcjtr/GeoNet)
 3. Download ground truth depth and our models from [https://drive.google.com/open?id=19BFkrfODd3N5IKQJJgqp-pXjbHeYrFf1](https://drive.google.com/open?id=19BFkrfODd3N5IKQJJgqp-pXjbHeYrFf1) (put the `models `folder directly under the project directory)
 4. Download KITTI evaluation dataset from [https://drive.google.com/open?id=1kYNKqIhArAD03WNr4_FZCYRRWo0WT31P](https://drive.google.com/open?id=1kYNKqIhArAD03WNr4_FZCYRRWo0WT31P) (move it two levels upon the project directory, i.e. `mv -f data ../../data`)
 
-## Inference for Depth
-
-1. Run `bash run_all_tests.sh` then wait for 2~4 minutes. Results are related to Table 1 ~ Table 4 in our paper.
-
-
-## Training on [KITTI](http://www.cvlibs.net/datasets/kitti/index.php)
-
-1. Follow the **Data preparation** instructions from [GeoNet](https://github.com/yzcjtr/GeoNet).
-2. Prepare for semantic lables (semantic-level: [DeeplabV3+](https://github.com/tensorflow/models/tree/master/research/deeplab), instance-level: [Mask-RCNN](https://github.com/facebookresearch/Detectron))
-3. Quick training: run `bash run_depth_train.sh config/foobar.cfg` where `foobar.cfg` is the configuration filename you need to specify.
-4. Logs will be saved in `${CHECKPOINT_DIR}/logs/` defined in `foobar.cfg` file
-
 ## Training & Evaluating Depth on a Different Dataset
 
-Training on a new dataset can be an involved process considering that everything is very specific to kitti.
-
-For detailed instructions and an example of training SIGNet on a new dataset, please visit [carla-SIGNet]{https://github.com/raunaks13/carla-SIGNet}.
+Training on a new dataset can be an involved process considering that everything in the original implementation is very specific to KITTI.
 
 ### Data Structuring
 There are certain key directories in the config files that will need to be changed based on your dataset. Namely, `DATASET_DIR`, `FILELIST_DIR`, `INS_TRAIN_KITTI_DIR`, `INS_TEST_KITTI_DIR`, and `MASK_KITTI_DIR` will need to be updated.
@@ -95,10 +81,12 @@ It is encouraged to go over how exactly these files are read into TF queues so t
 `bash run_depth_train.sh config/foobar.cfg` can be used to train depth.
 
 ### Evaluation
+
 There are a few changes during evaluation. The image files which contained sequences earlier will now contain single images since we only need single image input for depth prediction.
 
-You will also have to modify the ground truth depth generation based on your dataset. SIGNet for KITTI uses velodyne points to generate a sparse depth map for each image (details in paper).
+You will also have to modify the ground truth depth generation based on your dataset. SIGNet for KITTI uses velodyne points to generate a sparse depth map for each image (details in paper). This may not be the case in your scenario.
 
 In the end, ground truth depth files are stored as `models/gt_data/gt_depth.npy`. This `npy` file would contain a list with the depth maps of all test files in `test_eigen_file.txt`, in the same order.
 
 `bash run_depth_test_eval.sh config/foobar.cfg` can be used to evaluate depth.
+
