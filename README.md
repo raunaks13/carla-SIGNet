@@ -9,14 +9,9 @@ Y. Meng, Y. Lu, A. Raj, S. Sunarjo, R. Guo, T. Javidi, G. Bansal, D. Bharadia. *
 
 This repository recreates SIGNet for the CARLA Simulator. It also contains detailed instructions about how to train SIGNet on new datasets.
 
-The code is build upon [GeoNet](https://github.com/yzcjtr/GeoNet).
-
-## Prerequisite
-
-1. Ubuntu 16.04, python3, tensorflow-gpu 1.10.1 (test on GTX 1080Ti and RTX 2080Ti with CUDA 9.0)
-2. Better to use virtual environment. For the rest of dependencies, please run `pip3 install -r requirements.txt`)
-3. Download ground truth depth and our models from [https://drive.google.com/open?id=19BFkrfODd3N5IKQJJgqp-pXjbHeYrFf1](https://drive.google.com/open?id=19BFkrfODd3N5IKQJJgqp-pXjbHeYrFf1) (put the `models `folder directly under the project directory)
-4. Download KITTI evaluation dataset from [https://drive.google.com/open?id=1kYNKqIhArAD03WNr4_FZCYRRWo0WT31P](https://drive.google.com/open?id=1kYNKqIhArAD03WNr4_FZCYRRWo0WT31P) (move it two levels upon the project directory, i.e. `mv -f data ../../data`)
+## Prerequisites
+1. Ubuntu 16.04, python3, tensorflow-gpu 1.10.1
+2. Better to use virtual environment. For the rest of dependencies, please run `pip3 install -r requirements.txt`
 
 ## Training & Evaluating Depth on a Different Dataset
 
@@ -80,14 +75,14 @@ It is encouraged to go over how exactly these files are read into TF queues so t
 
 `bash run_depth_train.sh config/foobar.cfg` can be used to train depth.
 
-## Generating Semantic Data
+### Generating Semantic Data
 The SIGNet paper uses DeepLabv3+ to generate semantic maps. The `_.npy` files are simply the semantic segmentation image maps saved as `npy` files. The extension is updated to `.raw` for faster data loading.
 
-## Generating Instance Masks
+### Generating Instance Masks
 The SIGNet paper uses Mask-RCNN trained using FAIR's [Detectron]{https://github.com/facebookresearch/Detectron}. The Detectron code can be found in ________.
 The `_instance_new.npy` files are generated using the script ______. Once again, the extension is updated to `.raw` for faster data loading.
 
-## Generating Camera Intrinsics
+### Generating Camera Intrinsics
 The `_cam.txt` files contain 9 comma separated values representing the camera calibration matrix, in index order `(0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2)`.
 
 ### Evaluation
@@ -99,4 +94,3 @@ You will also have to modify the ground truth depth generation based on your dat
 In the end, ground truth depth files are stored as `models/gt_data/gt_depth.npy`. This `npy` file would contain a list with the depth maps of all test files in `test_eigen_file.txt`, in the same order.
 
 `bash run_depth_test_eval.sh config/foobar.cfg` can be used to evaluate depth.
-
