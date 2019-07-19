@@ -79,7 +79,7 @@ It is encouraged to go over how exactly these files are read into TF queues so t
 The SIGNet paper uses DeepLabv3+ to generate semantic maps. The `_.npy` files are simply the semantic segmentation image maps saved as `npy` files. The extension is updated to `.raw` for faster data loading.
 
 ### Generating Instance Masks
-The SIGNet paper uses Mask-RCNN trained using FAIR's [Detectron]{https://github.com/facebookresearch/Detectron}. The Detectron code can be found in ________.
+The SIGNet paper uses Mask-RCNN trained using FAIR's [Detectron](https://github.com/facebookresearch/Detectron). The Detectron code can be found in ________.
 The `_instance_new.npy` files are generated using the script ______. Once again, the extension is updated to `.raw` for faster data loading.
 
 ### Generating Camera Intrinsics
